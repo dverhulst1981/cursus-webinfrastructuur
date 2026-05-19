@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'webinsfrastructuur',
+  title: 'webinfrastructuur',
   tagline: 'Cursus webinfrastructuur',
   favicon: 'img/favicon.ico',
 
@@ -23,7 +23,7 @@ const config: Config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'opleiding-ap',
-  projectName: 'webinsfrastructuur',
+  projectName: 'webinfrastructuur',
 
   onBrokenLinks: 'throw',
 
@@ -34,6 +34,11 @@ const config: Config = {
     defaultLocale: 'nl',
     locales: ['nl'],
   },
+
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
 
   presets: [
     [
@@ -51,14 +56,17 @@ const config: Config = {
   ],
 
   themeConfig: {
+    mermaid: {
+      theme: {light: 'neutral', dark: 'dark'},
+    },
     image: 'img/docusaurus-social-card.jpg',
     colorMode: {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'webinsfrastructuur',
+      title: 'webinfrastructuur',
       logo: {
-        alt: 'webinsfrastructuur logo',
+        alt: 'webinfrastructuur logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -86,13 +94,13 @@ const config: Config = {
           title: 'Over',
           items: [
             {
-              label: 'webinsfrastructuur',
+              label: 'webinfrastructuur',
               to: '/docs/hoofdstuk-1-netwerkstack-tcp-ip-fundamenten',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} webinsfrastructuur.`,
+      copyright: `Copyright © ${new Date().getFullYear()} webinfrastructuur.`,
     },
     prism: {
       theme: prismThemes.github,

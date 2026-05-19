@@ -3,7 +3,7 @@ description: Algemene projectcontext en werkafspraken voor deze cursusrepo
 alwaysApply: true
 ---
 
-# Projectcontext: webinsfrastructuur
+# Projectcontext: webinfrastructuur
 
 > **Synchronisatie:** Dit bestand is de bron voor Cursor (`alwaysApply`). Spiegelbestand voor Claude Code en andere tools: [`CLAUDE.md`](../../CLAUDE.md) in de projectroot.
 >
@@ -11,7 +11,7 @@ alwaysApply: true
 
 ## Doel van het project
 
-- Dit project is een cursussite in Docusaurus voor "webinsfrastructuur".
+- Dit project is een cursussite in Docusaurus voor "webinfrastructuur".
 - Houd alle inhoud didactisch, duidelijk en studentgericht.
 
 ## Taal en stijl
