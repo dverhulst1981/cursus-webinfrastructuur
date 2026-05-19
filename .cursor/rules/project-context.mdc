@@ -1,0 +1,104 @@
+---
+description: Algemene projectcontext en werkafspraken voor deze cursusrepo
+alwaysApply: true
+---
+
+# Projectcontext: webinsfrastructuur
+
+> **Synchronisatie:** Dit bestand is de bron voor Cursor (`alwaysApply`). Spiegelbestand voor Claude Code en andere tools: [`CLAUDE.md`](../../CLAUDE.md) in de projectroot.
+>
+> Pas bij wijzigingen aan **leerdoelen, taal/stijl, inhoudelijke of technische afspraken, OLOD-kader of toetsing** beide bestanden aan. Secties die alleen in `CLAUDE.md` staan (repositorystructuur, npm-scripts, richtlijnen voor AI) hoef je hier niet te dupliceren.
+
+## Doel van het project
+
+- Dit project is een cursussite in Docusaurus voor "webinsfrastructuur".
+- Houd alle inhoud didactisch, duidelijk en studentgericht.
+
+## Taal en stijl
+
+- Schrijf in het Nederlands (BE/NL), tenzij expliciet anders gevraagd.
+- Gebruik een professionele maar toegankelijke toon.
+- Leg technische termen kort uit wanneer ze voor studenten nieuw kunnen zijn.
+
+## Inhoudelijke voorkeuren
+
+- Werk hoofdstukken uit met een consistente structuur (leerdoelen, kerninhoud, oefening).
+- Focus op praktische toepasbaarheid binnen webinfrastructuur.
+- Bewaak consistentie in hoofdstuktitels, bestandsnamen en navigatie.
+
+## Technische afspraken
+
+- Gebruik de bestaande Docusaurus-structuur als basis.
+- Vermijd onnodige nieuwe dependencies.
+- Houd wijzigingen klein, duidelijk en onderhoudbaar.
+
+## OLOD- en ECTS-kader
+
+- Deze cursus hoort bij het OLOD "Webinfrastructuur" en volgt de ECTS-fiche.
+- De leerdoelen zijn vastgelegd en moeten volledig afgedekt zijn door de cursusinhoud.
+- Bij nieuwe of aangepaste cursusinhoud moet expliciet duidelijk zijn welk leerdoel wordt ondersteund.
+
+## OLOD-naam
+
+- Webinfrastructuur
+
+## Leerdoelen
+
+### OLR 03
+
+De gegradueerde programmeert webapplicaties en databankstructuren en werkt hierbij planmatig gebruikmakend van de Agile methodiek.
+
+- Je zet een deployment-pipeline op en documenteert de stappen zodat ze herhaalbaar en overdraagbaar zijn.
+- Je werkt iteratief aan de configuratie van een webserver of container, waarbij je tussenstappen test en bijstuurt op basis van resultaten.
+
+### OLR 04
+
+De gegradueerde neemt verantwoordelijkheid voor de eigen digitale werkomgeving en draagt bij tot de gedeelde digitale infrastructuur nodig voor het ontwikkelen, testen en in productie brengen van projecten.
+
+- Je logt via SSH in op een Linux-server en configureert de omgeving zodat een webapplicatie draaibaar is.
+- Je deployt een applicatie via een cloudprovider (VPS).
+- Je draait een applicatie als container en integreert deze in een gedeelde infrastructuur via container orchestration.
+- Je configureert een reverse proxy zodat meerdere services bereikbaar zijn via een inkomend toegangspunt.
+- Je monitort de serverstatus door relevante systeemmetrieken (schijfgebruik, processorbelasting) op te vragen en te interpreteren.
+
+### OLR 05
+
+De gegradueerde programmeert volgens de standaarden en afspraken binnen de organisatie.
+
+- Je configureert HTTPS volgens de geldende beveiligingsstandaarden en zorgt dat een geldig certificaat correct is geinstalleerd.
+- Je past DNS-records aan volgens de gangbare conventies bij een publieke registrar.
+- Je schrijft container- en CI/CD-configuraties die voldoen aan de afgesproken projectstructuur en naamgevingsconventies.
+
+### OLR 06
+
+De gegradueerde documenteert in functie van kwalitatieve gebruikershandleidingen, referentiegidsen en online hulpbronnen waar nodig.
+
+- Je legt de stappen van een deployment-proces vast in een herhaalbare, leesbare procedure zodat een teamlid de deployment zelfstandig kan reproduceren.
+
+### OLR 07
+
+De gegradueerde gaat volgens testscenario's de werking en functionaliteit van de gerealiseerde code na en verbetert deze op basis van gerapporteerde bugs en issues.
+
+- Je verifieert na deployment of de applicatie correct bereikbaar is via HTTPS en troubleshoott bij verbindingsproblemen (bv. DNS-propagatie, certificaatfouten).
+- Je interpreteert systeemlogboeken en monitoringdata om de oorzaak van een defect of performantieprobleem te lokaliseren.
+
+### OLR 12
+
+De gegradueerde volgt relevante IT-evoluties op, identificeert de eigen ontwikkelingsnoden en verbetert continu de eigen praktijk.
+
+- Je vergelijkt deployment-methodes en motiveert welke aanpak het meest geschikt is voor een gegeven tech-stack en context.
+- Je evalueert de voor- en nadelen van containerisatie ten opzichte van traditionele server-deployment op basis van technische criteria.
+
+### OLR 13
+
+De gegradueerde handelt deontologisch en houdt rekening met de wettelijke en bedrijfseigen veiligheids- en privacyrichtlijnen.
+
+- Je beveiligt de toegang tot een server door SSH-authenticatie correct te configureren en wachtwoordlogin te vermijden waar mogelijk.
+- Je stelt HTTPS verplicht in voor een publiek bereikbare webapplicatie en legt uit waarom onversleuteld HTTP onaanvaardbaar is in een productieomgeving.
+- Je houdt bij het ontwikkelen en deployen van webapplicaties rekening met het juridische en ethische kader en past je keuzes en aanpak daar bewust op aan.
+
+## Toetsing
+
+- Tussentijdse toets (vaardigheidstoets): 15%
+- Examen (vaardigheidstoets): 55%
+- Projectopdracht: 30% - mondelinge toelichting; deelname verplicht, anders ND.
