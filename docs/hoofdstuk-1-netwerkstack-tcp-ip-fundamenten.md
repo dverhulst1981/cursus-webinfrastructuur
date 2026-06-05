@@ -4,7 +4,14 @@ title: "1. Netwerk fundamentals"
 
 # Netwerk fundamentals
 
-In dit hoofdstuk frissen we de **netwerkbasis** op en zetten we de eerste stap richting deployment. Je herhaalt het **TCP/IP-model**, leert wat een **server** en de **cloud** precies zijn, en zet zelf een **cloud server (VPS)** op. Via **SSH** log je veilig in, je frist enkele **Linux-basiscommando's** op, en als eindopdracht **deploy** je een **statische webpagina** met een webserver naar keuze (`webfsd`, **Apache** of **nginx**).
+In dit hoofdstuk frissen we de **netwerkbasis** op en zetten we de eerste stap richting deployment. Wat je doet:
+
+- het **TCP/IP-model** herhalen
+- leren wat een **server** en de **cloud** zijn
+- zelf een **cloud server (VPS)** opzetten
+- veilig inloggen via **SSH**
+- enkele **Linux-basiscommando's** opfrissen
+- als eindopdracht een **statische webpagina deployen** (met `webfsd`, **Apache** of **nginx**)
 
 Dit is het fundament voor de rest van de cursus: DNS ([hoofdstuk 2](./hoofdstuk-2-dns.md)) en HTTP(S) ([hoofdstuk 3](./hoofdstuk-3-http.md)-[4](./hoofdstuk-4-https.md)) bouwen rechtstreeks verder op wat je hier opzet.
 
@@ -12,18 +19,23 @@ Dit is het fundament voor de rest van de cursus: DNS ([hoofdstuk 2](./hoofdstuk-
 
 Na dit hoofdstuk kan je:
 
-- **het TCP/IP-model** beschrijven en de rol van elke laag uitleggen (*OLR 04*, *OLR 12*);
-- **uitleggen** wat een server is en hoe een client met een server communiceert (*OLR 04*);
-- **de cloud** situeren en het verschil tussen IaaS, PaaS en SaaS benoemen; een **VPS** plaatsen binnen dat geheel (*OLR 04*, *OLR 12*);
-- **een cloud server (VPS)** aanmaken bij een cloudprovider en de basisconfiguratie uitvoeren (*OLR 04*);
-- **via SSH** veilig inloggen op een Linux-server en uitleggen waarom sleutelauthenticatie te verkiezen is boven wachtwoorden (*OLR 04*, *OLR 13*);
-- **Linux-basiscommando's** correct toepassen om te navigeren en bestanden te beheren (`pwd`, `ls`, `cd`, `cat`, `mkdir`, `nano`, …) (*OLR 04*);
-- **een statische webpagina deployen** op de VPS met `webfsd`, Apache of nginx en de bereikbaarheid verifiëren (*OLR 03*, *OLR 04*, *OLR 07*);
-- **de stappen documenteren** zodat de deployment herhaalbaar is (*OLR 06*).
+- **het TCP/IP-model** beschrijven en de rol van elke laag uitleggen (*OLR 04*, *OLR 12*)
+- **uitleggen** wat een server is en hoe een client met een server communiceert (*OLR 04*)
+- **de cloud** situeren en het verschil tussen IaaS, PaaS en SaaS benoemen, en een **VPS** binnen dat geheel plaatsen (*OLR 04*, *OLR 12*)
+- **een cloud server (VPS)** aanmaken bij een cloudprovider en de basisconfiguratie uitvoeren (*OLR 04*)
+- **via SSH** veilig inloggen op een Linux-server en uitleggen waarom sleutelauthenticatie te verkiezen is boven wachtwoorden (*OLR 04*, *OLR 13*)
+- **Linux-basiscommando's** correct toepassen om te navigeren en bestanden te beheren (`pwd`, `ls`, `cd`, `cat`, `mkdir`, `nano`, …) (*OLR 04*)
+- **een statische webpagina deployen** op de VPS met `webfsd`, Apache of nginx en de bereikbaarheid verifiëren (*OLR 03*, *OLR 04*, *OLR 07*)
+- **de stappen documenteren** zodat de deployment herhaalbaar is (*OLR 06*)
 
 :::info[OLR-koppeling]
 
-Dit hoofdstuk legt de basis voor *OLR 04* (inloggen via SSH en een webapplicatie draaibaar maken op een Linux-server, deployen via een VPS). Het veilig configureren van SSH sluit aan op *OLR 13*. Het documenteren van een herhaalbare deployment hoort bij *OLR 06*. De afweging tussen verschillende soorten cloud-diensten raakt *OLR 12*.
+Dit hoofdstuk koppelt aan meerdere leerdoelen:
+
+- **OLR 04** - inloggen via SSH, een Linux-server klaarmaken en deployen via een VPS
+- **OLR 13** - SSH veilig configureren
+- **OLR 06** - een herhaalbare deployment documenteren
+- **OLR 12** - soorten cloud-diensten afwegen
 
 :::
 
@@ -33,7 +45,7 @@ Dit hoofdstuk legt de basis voor *OLR 04* (inloggen via SSH en een webapplicatie
 
 Wanneer twee computers over een netwerk praten, gebeurt dat niet in één grote stap maar in **lagen**. Elke laag heeft een eigen verantwoordelijkheid en praat enkel met de laag erboven en eronder. Dit **gelaagde model** maakt netwerken beheersbaar: je kunt één laag aanpassen (bv. van wifi naar kabel) zonder de rest te herschrijven.
 
-In deze cursus gebruiken we het **TCP/IP-model in vijf lagen**. Dit is een veelgebruikte onderwijsvariant die de onderste laag opsplitst in een **datalink-** en een **fysieke** laag - handig omdat MAC-adressering (datalink) en het effectieve signaal op de kabel (fysiek) duidelijk gescheiden worden. Het oudere **OSI-model** (zeven lagen) zie je vooral in theorie; de mapping staat in de laatste kolom.
+In deze cursus gebruiken we het **TCP/IP-model in vijf lagen**. Dit is een veelgebruikte variant die de onderste laag opsplitst in een **datalink-** en een **fysieke** laag - handig omdat MAC-adressering (datalink) en het effectieve signaal op de kabel (fysiek) duidelijk gescheiden worden. Het oudere **OSI-model** (zeven lagen) zie je vooral in theorie. De mapping staat in de laatste kolom.
 
 | # | TCP/IP-laag (5) | Taak | Protocollen | Adressering (bron → bestemming) | Eenheid | OSI |
 |---|-----------------|------|-------------|---------------------------------|---------|-----|
@@ -49,11 +61,11 @@ Hieronder kort wat elke laag doet, van onder (de fysieke verbinding) naar boven 
 
 De onderste laag verstuurt de **bits** (enen en nullen) als een echt **signaal** over een fysiek medium. Hoe dat signaal eruitziet, hangt af van het medium:
 
-- **koperkabel** (UTP, Ethernet) - als elektrische spanning;
-- **glasvezel** - als lichtpulsen;
-- **wifi** - als radiogolven door de lucht.
+- **koperkabel** (UTP, Ethernet) - als elektrische spanning
+- **glasvezel** - als lichtpulsen
+- **wifi** - als radiogolven door de lucht
 
-Hier horen ook de tastbare zaken thuis: kabels, connectoren en de netwerkkaart die het signaal verstuurt en ontvangt. De fysieke laag **begrijpt niet** wat de bits betekenen; ze zorgt enkel dat ze van het ene punt naar het andere geraken. Eigenschappen als **bandbreedte** (hoeveel bits per seconde) spelen op dit niveau.
+De laag **begrijpt de bits niet**, maar brengt ze van punt A naar punt B. Ook **bandbreedte** (bits per seconde) speelt op dit niveau.
 
 #### Datalinklaag (laag 2)
 
@@ -76,15 +88,15 @@ De netwerklaag biedt **geen garanties** dat alles aankomt - dat is net de taak v
 
 #### Transportlaag (laag 4)
 
-De netwerklaag eronder bezorgt data bij de juiste **machine**. De transportlaag gaat een stap verder: ze zorgt dat de data bij het juiste **programma** op die machine raakt, en - afhankelijk van het protocol - dat ze ook **volledig en correct** aankomt. Ze knipt grote data in kleinere **segmenten** en zet die aan de andere kant weer in de juiste volgorde.
+De netwerklaag bezorgt data bij de juiste **machine**. De transportlaag gaat verder: ze brengt de data bij het juiste **programma** (via poorten) en zorgt - bij TCP - dat alles **volledig en in volgorde** aankomt. Grote data wordt in **segmenten** geknipt en aan de andere kant weer samengevoegd.
 
-**Waarom heb je een poort nodig?** Een **IP-adres** brengt data tot bij de juiste **machine**, maar daar draaien meestal **meerdere programma's tegelijk**: bijvoorbeeld een webserver, een SSH-dienst en een database op één en dezelfde server. Met alleen een IP-adres zou het besturingssysteem niet weten **welk** van die programma's een binnenkomend segment moet krijgen. De **poort** lost dat op: ze is het "huisnummer" binnen de machine waarmee je een specifiek programma aanspreekt.
+**Waarom heb je een poort nodig?** Op één machine draaien meestal **meerdere programma's tegelijk**: bv. een webserver, een SSH-dienst en een database. Een **IP-adres** brengt data wel bij de juiste machine, maar niet bij het juiste programma. Dat doet de **poort**: het "huisnummer" binnen de machine.
 
 > Vergelijking: het **IP-adres** is het adres van het *gebouw*, de **poort** is het *bureau- of busnummer* binnen dat gebouw. Zonder busnummer weet de postbode niet bij wie de brief moet.
 
 Een **poortnummer** (16 bits, 0-65535) zegt dus voor welk programma een segment bedoeld is. Bij een verbinding spelen er altijd twee poorten mee:
 
-- de **bestemmingspoort** = de dienst die je aanspreekt. Die ligt vast per protocol (een *well-known port*, bv. 443 voor HTTPS);
+- de **bestemmingspoort** = de dienst die je aanspreekt. Die ligt vast per protocol (een *well-known port*, bv. 443 voor HTTPS).
 - de **bronpoort** = een willekeurig, tijdelijk nummer dat jouw toestel kiest (een *ephemeral port*, bv. 54123). Zo weet de server naar welke poort hij zijn antwoord moet terugsturen.
 
 | Poort | Dienst |
@@ -94,9 +106,11 @@ Een **poortnummer** (16 bits, 0-65535) zegt dus voor welk programma een segment 
 | 443 | HTTPS |
 | 53 | DNS |
 
-Een webserver luistert dus standaard op **poort 80** (HTTP) of **443** (HTTPS); via **poort 22** (SSH) log je in op de server.
+Een webserver luistert dus standaard op **poort 80** (HTTP) of **443** (HTTPS). Via **poort 22** (SSH) log je in op de server.
 
-**Twee protocollen: TCP en UDP.** Het grote verschil is *betrouwbaarheid versus snelheid*.
+##### Twee protocollen: TCP en UDP
+
+Het grote verschil is *betrouwbaarheid versus snelheid*.
 
 | | **TCP** | **UDP** |
 |--|---------|---------|
@@ -105,42 +119,101 @@ Een webserver luistert dus standaard op **poort 80** (HTTP) of **443** (HTTPS); 
 | Snelheid | iets trager (overhead) | sneller, weinig overhead |
 | Typisch voor | HTTP(S), SSH, e-mail | streaming, gaming, DNS-queries, VoIP |
 
-- **TCP** (*Transmission Control Protocol*) is **betrouwbaar**. Voor elk segment verwacht de zender een **bevestiging** (*ACK*); blijft die uit, dan wordt het segment **opnieuw verstuurd**. Verkeerd aangekomen segmenten worden via een volgnummer weer **op volgorde** gezet. Een TCP-verbinding wordt eerst opgezet met een **three-way handshake**: de client stuurt `SYN`, de server antwoordt met `SYN-ACK`, de client bevestigt met `ACK`. Pas daarna begint de eigenlijke datastroom.
-- **UDP** (*User Datagram Protocol*) is **snel** maar zonder garanties: er is geen handshake en geen hertransmissie. Dat is prima wanneer een verloren stukje niet erg is en snelheid primeert (bij live video is een gemiste frame minder erg dan vertraging).
+**TCP** (*Transmission Control Protocol*) is **betrouwbaar**:
 
-In deze cursus werk je vooral met **TCP**: zowel het opvragen van een webpagina (HTTP/HTTPS) als het inloggen via SSH gebeurt erover, omdat je daar élk byte correct wil ontvangen.
+- elk segment krijgt een **bevestiging** (*ACK*). Komt die niet, dan volgt **hertransmissie**.
+- via volgnummers zet de ontvanger alles weer **op volgorde**.
+- de verbinding start met een **three-way handshake**: `SYN` → `SYN-ACK` → `ACK`. Pas daarna begint de datastroom.
+
+**UDP** (*User Datagram Protocol*) is **snel**, zonder garanties:
+
+- geen handshake, geen hertransmissie
+- prima als snelheid primeert (bij live video stoort een gemiste frame minder dan vertraging)
+
+In deze cursus werk je vooral met **TCP**: zowel webpagina's opvragen (HTTP/HTTPS) als inloggen via SSH gebeurt erover.
 
 #### Applicatielaag (laag 5)
 
 De laag waar **programma's** met elkaar communiceren. Hier leeft het eigenlijke bericht - bijvoorbeeld een **HTTP-verzoek** van je browser. Typische protocollen: **HTTP(S)**, **DNS**, **SSH**, **FTP** en e-mailprotocollen. Deze laag bepaalt het *formaat* van de data, niet hoe ze fysiek op de bestemming raakt.
 
+Over deze applicatieprotocollen lees je later meer: **DNS** in [hoofdstuk 2](./hoofdstuk-2-dns.md), **HTTP** in [hoofdstuk 3](./hoofdstuk-3-http.md) en **HTTPS** in [hoofdstuk 4](./hoofdstuk-4-https.md).
+
 #### Encapsulatie en decapsulatie
 
-Bij het versturen voegt elke laag van boven naar beneden zijn eigen **header** toe (je HTTP-bericht wordt verpakt in een TCP-segment, dat in een IP-pakket, dat in een frame, dat als bits over de fysieke link gaat); dit heet **encapsulatie**. Aan de ontvangerkant wordt elke laag van onder naar boven weer **uitgepakt** (**decapsulatie**). Zo komt je oorspronkelijke verzoek bovenaan terug uit.
+Data reist in twee richtingen door de stack:
 
-Belangrijk: elke laag voegt zowel een **bron-** als een **bestemmingsadres** toe - telkens op zijn eigen niveau (zie de kolom *Adressering* in de tabel hierboven). Zo weet de ontvanger niet alleen wáár het naartoe moet, maar ook waarnaar het antwoord teruggestuurd kan worden:
+- **Encapsulatie** (verzenden): elke laag voegt van boven naar beneden zijn eigen **header** toe. Het bericht wordt zo verpakt tot segment → pakket → frame → bits.
+- **Decapsulatie** (ontvangen): elke laag pelt van onder naar boven zijn header weer af, tot enkel het oorspronkelijke bericht overblijft.
 
-- **Transport** - bronpoort (bv. 54123) → bestemmingspoort (bv. 443): identificeert het **programma / de dienst**.
-- **Netwerk** - bron-IP (jouw toestel) → bestemmings-IP (de server): identificeert de **machine** (logisch adres).
-- **Datalink** - bron-MAC → bestemmings-MAC: identificeert de **netwerkkaart** (fysiek adres).
-- **Fysiek** - géén adressering; enkel de **bits** als signaal op de kabel of in de lucht.
+Elke laag voegt op zijn eigen niveau **twee adressen** toe:
 
-#### Encapsulatie: header toevoegen (verzender)
+- een **bronadres** = waar het vandaan komt
+- een **bestemmingsadres** = waar het naartoe moet
 
-De "Bericht" (rechts, groen) blijft ongewijzigd; elke laag **plakt er links een eigen header-blok bij**, telkens met een **bron- en bestemmingsadres** op zijn niveau. Zo groeit de data-eenheid van **bericht → segment → packet → frame → bits**:
+#### Voorbeeld: surfen naar `www.kbc.be`
+
+We volgen één verzoek door alle lagen: **je surft naar `https://www.kbc.be`**. Eerst de **encapsulatie** bij jou, daarna de **decapsulatie** bij KBC. Onderstaande adressen komen in beide schema's terug - houd ze als **leidraad** bij de hand:
+
+| Adres | Bron (jouw toestel) | Bestemming |
+|-------|---------------------|------------|
+| **Poort** | `51514` (willekeurig gekozen) | `443` (HTTPS) |
+| **IP-adres** | `192.168.0.10` (jouw toestel) | `193.190.71.10` (KBC-webserver) |
+| **MAC-adres** | `00:12:F1:1E:E8:93` (jouw netwerkkaart) | `A4:5E:60:1F:23:8B` (je router) |
+
+De reis verloopt in twee richtingen: eerst gaat jouw **verzoek** naar KBC, daarna komt het **antwoord** (de webpagina) terug.
+
+**1. Het verzoek - van jouw pc naar de KBC-server**
+
+Jouw pc bouwt het verzoek op (**encapsulatie**, de stack omlaag). De KBC-server pakt het weer uit (**decapsulatie**, de stack omhoog).
+
+```mermaid
+flowchart LR
+  PC["Jouw pc<br/>192.168.0.10<br/><a href='#encapsulatie-bij-de-verzender-jouw-toestel'><b>encapsulatie</b></a>"] ==>|"HTTPS-verzoek<br/>GET www.kbc.be"| R["Je router"]
+  R ==>|"via vele routers"| NET(("Internet"))
+  NET ==> SRV["KBC-webserver<br/>193.190.71.10 : 443<br/><a href='#decapsulatie-bij-de-ontvanger-kbc-webserver'><b>decapsulatie</b></a>"]
+  classDef enc fill:#e6f4ea,stroke:#3c7d3c,stroke-width:2px,color:#1b4d1b;
+  classDef dec fill:#e8f0fe,stroke:#4a6a8a,stroke-width:2px,color:#1b3a5d;
+  class PC enc;
+  class SRV dec;
+```
+
+Het verzoek wordt onderweg opgeknipt in **pakketten** en komt zo, hop per hop, aan bij de KBC-server.
+
+**2. Het antwoord - van de KBC-server terug naar jou**
+
+Nu draaien de rollen om: de KBC-server bouwt het antwoord op (**encapsulatie**) en jouw pc pakt het uit (**decapsulatie**).
+
+```mermaid
+flowchart RL
+  SRV["KBC-webserver<br/>193.190.71.10 : 443<br/><b>encapsulatie</b>"] ==>|"de webpagina<br/>(HTTP-antwoord)"| NET(("Internet"))
+  NET ==>|"via vele routers"| R["Je router"]
+  R ==> PC["Jouw pc<br/>192.168.0.10<br/>toont de webpagina<br/><b>decapsulatie</b>"]
+  classDef enc fill:#e6f4ea,stroke:#3c7d3c,stroke-width:2px,color:#1b4d1b;
+  classDef dec fill:#e8f0fe,stroke:#4a6a8a,stroke-width:2px,color:#1b3a5d;
+  class SRV enc;
+  class PC dec;
+```
+
+De server stuurt de gevraagde pagina terug. Jouw browser ontvangt de pakketten, zet ze weer samen en toont `www.kbc.be`.
+
+> **Onthoud:** **encapsulatie** gebeurt enkel bij de **verzender** en **decapsulatie** enkel bij de **ontvanger**. De routers ertussen kijken alleen naar de adressen en sturen het pakket door - zij pakken het niet volledig uit.
+
+##### Encapsulatie bij de verzender (jouw toestel)
+
+Je browser maakt een **HTTPS-verzoek** voor `www.kbc.be`. Dat "Bericht" (rechts, groen) blijft ongewijzigd. Elke laag **plakt er links een eigen header-blok bij**, telkens met een **bron- en bestemmingsadres** op zijn niveau. Zo groeit de data-eenheid van **bericht → segment → packet → frame → bits**:
 
 <div class="enc">
   <div class="enc-layer">
     <div class="enc-title">5 · Applicatie - Bericht</div>
     <div class="enc-row">
-      <span class="enc-block enc-msg">Bericht: "download webpagina van 192.168.1.102"</span>
+      <span class="enc-block enc-msg">Bericht = GET {"https://www.kbc.be"}</span>
     </div>
   </div>
   <div class="enc-arrow">↓ <span>voeg poort-header toe</span></div>
   <div class="enc-layer">
     <div class="enc-title">4 · Transport - Segment</div>
     <div class="enc-row">
-      <span class="enc-block enc-port">Bronpoort = 31244 · Bestemmingspoort = 80</span>
+      <span class="enc-block enc-port">Bronpoort = 51514 · Bestemmingspoort = 443 (HTTPS)</span>
       <span class="enc-block enc-msg">Bericht</span>
     </div>
   </div>
@@ -148,7 +221,7 @@ De "Bericht" (rechts, groen) blijft ongewijzigd; elke laag **plakt er links een 
   <div class="enc-layer">
     <div class="enc-title">3 · Netwerk - Packet</div>
     <div class="enc-row">
-      <span class="enc-block enc-ip">Bron-IP = 192.168.1.101 · Bestemmings-IP = 192.168.1.102</span>
+      <span class="enc-block enc-ip">Bron-IP = 192.168.0.10 · Bestemmings-IP = 193.190.71.10 (KBC)</span>
       <span class="enc-block enc-port">Poorten</span>
       <span class="enc-block enc-msg">Bericht</span>
     </div>
@@ -157,7 +230,7 @@ De "Bericht" (rechts, groen) blijft ongewijzigd; elke laag **plakt er links een 
   <div class="enc-layer">
     <div class="enc-title">2 · Datalink - Frame</div>
     <div class="enc-row">
-      <span class="enc-block enc-mac">Bron-MAC = 00:12:F1:1E:E8:93 · Bestemmings-MAC = 00:04:A3:4D:1C:73</span>
+      <span class="enc-block enc-mac">Bron-MAC = 00:12:F1:1E:E8:93 · Bestemmings-MAC = A4:5E:60:1F:23:8B (router)</span>
       <span class="enc-block enc-ip">IP-adressen</span>
       <span class="enc-block enc-port">Poorten</span>
       <span class="enc-block enc-msg">Bericht</span>
@@ -172,9 +245,11 @@ De "Bericht" (rechts, groen) blijft ongewijzigd; elke laag **plakt er links een 
   </div>
 </div>
 
-#### Decapsulatie: header verwijderen (ontvanger)
+> **Let op:** het bestemmings-**IP** is de KBC-webserver, maar het bestemmings-**MAC** is **je router** - niet KBC. Een MAC-adres geldt enkel op je lokale netwerk en wordt bij elke router-hop vervangen. Het **IP-adres blijft wél hetzelfde** tot bij KBC.
 
-De webserver doet exact het omgekeerde: elke laag **leest zijn eigen header-blok uit en verwijdert het**, tot enkel de oorspronkelijke "Bericht" overblijft:
+##### Decapsulatie bij de ontvanger (KBC-webserver)
+
+De **KBC-webserver** doet exact het omgekeerde: elke laag **leest zijn eigen header-blok uit en verwijdert het**, tot enkel het oorspronkelijke "Bericht" overblijft:
 
 <div class="enc">
   <div class="enc-layer">
@@ -218,17 +293,6 @@ De webserver doet exact het omgekeerde: elke laag **leest zijn eigen header-blok
     </div>
   </div>
 </div>
-
-:::info[MAC-adres = datalink, niet de fysieke laag]
-
-Een **MAC-adres** (*Media Access Control*, bv. `a4:5e:60:1f:23:8b`) is een **fysiek vastliggend adres** in de netwerkkaart, maar het werkt op de **datalink-laag (laag 2)** - *niet* op de **fysieke laag (laag 1)**. Net daarom gebruiken we het 5-lagenmodel: zo staan deze twee rollen apart.
-
-- De **datalink-laag** bouwt **frames** en gebruikt **MAC-adressen** om de juiste netwerkkaart op het lokale netwerk aan te spreken.
-- De **fysieke laag** kent géén adressen: ze zet de bits enkel om in een **signaal** (spanning, licht, radio) over de kabel of de lucht.
-
-**IP vs MAC:** het **IP-adres** (netwerklaag) is een **logisch** adres dat onderweg blijft tot bij de eindbestemming (gebruikt voor **routering** tussen netwerken). Het **MAC-adres** (datalink) is **lokaal**: bij elke router-hop wordt het bron- en bestemmings-MAC **vervangen** door dat van de volgende schakel, terwijl de IP-adressen hetzelfde blijven.
-
-:::
 
 ### Wat is een server?
 
@@ -277,7 +341,10 @@ In deze cursus werken we met **IaaS** in de vorm van een **VPS** (*Virtual Priva
 
 :::tip[Afweging - OLR 12]
 
-Een VPS geeft je **maximale controle** maar ook **maximale verantwoordelijkheid** (updates, beveiliging, back-ups). PaaS-platformen nemen veel werk uit handen, maar geven minder vrijheid en zijn vaak duurder bij schaal. Welke aanpak past, hangt af van je tech-stack, budget en team. We komen hierop terug bij de vergelijking van deployment-methodes.
+- **VPS**: maximale controle, maar ook maximale verantwoordelijkheid (updates, beveiliging, back-ups).
+- **PaaS**: neemt werk uit handen, maar minder vrijheid en vaak duurder bij schaal.
+
+Welke aanpak past, hangt af van je tech-stack, budget en team. We komen hierop terug bij de vergelijking van deployment-methodes.
 
 :::
 
@@ -287,7 +354,7 @@ De concrete stappen verschillen lichtjes per provider, maar het **patroon** is o
 
 1. **Account aanmaken** bij een cloudprovider (bv. DigitalOcean, Hetzner Cloud, Azure). Voor de cursus kies je een goedkope instance (vaak een "droplet", "cloud server" of "VM" genoemd).
 2. **Een instance aanmaken**:
-   - **Besturingssysteem** - kies **Ubuntu Server** (een recente LTS-versie, bv. 24.04). LTS = *Long Term Support*, dus lang ondersteund en stabiel.
+   - **Besturingssysteem** - kies best een **Linux-instantie**, bijvoorbeeld **Ubuntu Server** (een recente LTS-versie, bv. 24.04). LTS = *Long Term Support*, dus lang ondersteund en stabiel.
    - **Grootte** - voor een statische pagina volstaat de kleinste optie (1 vCPU, 1 GB RAM).
    - **Regio** - kies een datacenter dicht bij je gebruikers (bv. Frankfurt of Amsterdam voor België).
 3. **Authenticatie instellen** - voeg je **publieke SSH-sleutel** toe (zie de sectie hieronder). Dit is veiliger dan een wachtwoord.
@@ -327,19 +394,34 @@ flowchart LR
   Priv -.->|"bewijst identiteit"| Pub
 ```
 
-Een sleutelpaar maak je éénmalig aan op je eigen computer:
+Bij sleutelauthenticatie blijft je **private** sleutel altijd op je eigen computer - hij wordt **nooit** over het netwerk verstuurd. Bij het inloggen bewijs je met die private sleutel dat je de bijhorende **publieke** sleutel bezit, en zo kom je binnen zonder wachtwoord.
 
-```bash
-ssh-keygen -t ed25519 -C "jouw.naam@school.be"
-```
+De volledige flow ziet er zo uit:
 
-Dit maakt twee bestanden aan: `~/.ssh/id_ed25519` (private - **nooit delen**) en `~/.ssh/id_ed25519.pub` (publiek - deze geef je aan de provider). Daarna log je in:
+1. **Sleutelpaar aanmaken** op je eigen computer (eenmalig):
 
-```bash
-ssh root@203.0.113.10
-```
+   ```bash
+   ssh-keygen -t ed25519 -C "jouw.naam@school.be"
+   ```
 
-Bij de eerste verbinding vraagt SSH of je de server vertrouwt (de *host key fingerprint*). Bevestig met `yes`. Daarna zit je in de **shell** van de server.
+   Dit maakt twee bestanden aan: `~/.ssh/id_ed25519` (private - **nooit delen**) en `~/.ssh/id_ed25519.pub` (publiek).
+
+2. **Publieke sleutel op de server zetten** - via de provider (VPS-stap 3) of met `ssh-copy-id gebruiker@IP`. De sleutel komt terecht in `~/.ssh/authorized_keys` op de server.
+
+3. **Aanmelden** op de server:
+
+   ```bash
+   ssh root@203.0.113.10
+   ```
+
+4. **De eerste keer** vraagt SSH of je de server vertrouwt en toont de *host key fingerprint*. Bevestig met `yes`: de host key wordt opgeslagen in `~/.ssh/known_hosts` op jouw computer. Bij volgende logins verloopt het verbinden zonder die vraag. Daarna zit je in de **shell** van de server.
+
+Twee bestanden spelen dus een sleutelrol:
+
+- **`~/.ssh/authorized_keys` (op de server)** - bevat jouw **publieke** sleutel(s); zo weet de server wie mag inloggen.
+- **`~/.ssh/known_hosts` (op jouw computer)** - bevat de **host key** van servers waarmee je al verbond; zo herkent SSH de server bij een volgende login en **waarschuwt** het als die plots wijzigt (bv. een mogelijke man-in-the-middle).
+
+Kort samengevat: `authorized_keys` zegt de **server** wie binnen mag, `known_hosts` zegt **jou** met welke server je praat.
 
 :::warning[Beveiliging - OLR 13]
 
@@ -349,7 +431,7 @@ Schakel **wachtwoordlogin uit** zodra sleutelauthenticatie werkt (`PasswordAuthe
 
 ### Linux-basiscommando's (herhaling)
 
-Op de VPS werk je in een **terminal** zonder grafische interface. Een korte opfrissing van de commando's die je nodig hebt. Het bestandssysteem is een **boom** die begint bij de root `/`; je "huidige map" is je werkmap.
+Op de VPS werk je in een **terminal** zonder grafische interface. Een korte opfrissing van de commando's die je nodig hebt. Het bestandssysteem is een **boom** die begint bij de root `/`. Je "huidige map" is je werkmap.
 
 #### Navigeren
 
@@ -391,7 +473,7 @@ sudo apt install nginx     # software installeren
 
 ### Een statische webpagina deployen
 
-Een **statische webpagina** is een vast bestand (HTML, CSS, afbeeldingen) dat de server ongewijzigd terugstuurt - geen databank of servercode nodig. Dat maakt het de ideale eerste deployment. Je hebt drie eenvoudige opties; kies er één.
+Een **statische webpagina** is een vast bestand (HTML, CSS, afbeeldingen) dat de server ongewijzigd terugstuurt - geen databank of servercode nodig. Dat maakt het de ideale eerste deployment. Je hebt drie eenvoudige opties. Kies er één.
 
 ```mermaid
 flowchart LR
@@ -433,7 +515,7 @@ sudo systemctl restart nginx    # herstart na configuratiewijziging
 
 #### Optie C - Apache
 
-**Apache** (`apache2` op Ubuntu) werkt volgens hetzelfde principe; ook hier staat de webroot in `/var/www/html`:
+**Apache** (`apache2` op Ubuntu) werkt volgens hetzelfde principe. Ook hier staat de webroot in `/var/www/html`:
 
 ```bash
 sudo apt update
@@ -470,18 +552,18 @@ Op een verse Ubuntu-server staat `ufw` vaak nog **uit**. Open dan éérst poort 
 
 | Symptoom | Mogelijke oorzaak | Wat te doen |
 |----------|-------------------|-------------|
-| `Connection refused` bij SSH | Verkeerd IP, server uit, poort 22 dicht | IP controleren; firewall poort 22 openen |
+| `Connection refused` bij SSH | Verkeerd IP, server uit, poort 22 dicht | IP controleren, firewall poort 22 openen |
 | `Permission denied (publickey)` | Verkeerde of ontbrekende SSH-sleutel | Juiste sleutel toevoegen bij provider |
-| Pagina onbereikbaar in browser | Poort 80 dicht of webserver gestopt | `sudo systemctl status nginx`; firewall poort 80 |
+| Pagina onbereikbaar in browser | Poort 80 dicht of webserver gestopt | `sudo systemctl status nginx`, firewall poort 80 |
 | `403 Forbidden` | Rechten op bestand/map verkeerd | Eigenaarschap/rechten van `/var/www/html` nakijken |
 | Oude pagina blijft tonen | Browsercache | Hard refresh (`Ctrl + F5`) of test met `curl` |
 
 ### Samenvatting
 
-- Netwerken werken in **lagen**; het **TCP/IP-model (5 lagen)** bestaat uit applicatie, transport, netwerk, datalink en fysiek. **TCP** is betrouwbaar, **UDP** is snel.
-- Een **server** beantwoordt verzoeken van **clients**; een **webserver** levert pagina's via poort 80/443.
-- De **cloud** is gehuurde infrastructuur; een **VPS** (IaaS) geeft je volledige controle over een eigen virtuele server.
-- Via **SSH** (poort 22) log je veilig in; **sleutelauthenticatie** is veiliger dan een wachtwoord.
+- Netwerken werken in **lagen**. Het **TCP/IP-model (5 lagen)** bestaat uit applicatie, transport, netwerk, datalink en fysiek. **TCP** is betrouwbaar, **UDP** is snel.
+- Een **server** beantwoordt verzoeken van **clients**. Een **webserver** levert pagina's via poort 80/443.
+- De **cloud** is gehuurde infrastructuur. Een **VPS** (IaaS) geeft je volledige controle over een eigen virtuele server.
+- Via **SSH** (poort 22) log je veilig in. **Sleutelauthenticatie** is veiliger dan een wachtwoord.
 - Met enkele **Linux-basiscommando's** beheer je bestanden, en met `webfsd`, **nginx** of **Apache** deploy je je eerste **statische webpagina**.
 
 ## Oefeningen
