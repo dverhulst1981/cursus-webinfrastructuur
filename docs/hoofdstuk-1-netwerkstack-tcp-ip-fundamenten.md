@@ -43,7 +43,9 @@ In deze cursus gebruiken we het **TCP/IP-model in vijf lagen**. Dit is een veelg
 | 2 | **Datalink** | Fysieke adressering (MAC), frames over de link | Ethernet, wifi (802.11), ARP | bron-**MAC** → bestemmings-**MAC** | frame | 2 |
 | 1 | **Fysiek** | Bits als signaal versturen (spanning, licht, radio) | kabel, glasvezel, radiogolven | — (geen adressering) | bits | 1 |
 
-**Encapsulatie.** Bij het versturen voegt elke laag van boven naar beneden zijn eigen **header** toe (je HTTP-bericht wordt verpakt in een TCP-segment, dat in een IP-pakket, dat in een frame, dat als bits over de fysieke link gaat). Aan de ontvangerkant wordt elke laag van onder naar boven weer **uitgepakt**. Zo komt je oorspronkelijke verzoek bovenaan terug uit.
+#### Encapsulatie en decapsulatie
+
+Bij het versturen voegt elke laag van boven naar beneden zijn eigen **header** toe (je HTTP-bericht wordt verpakt in een TCP-segment, dat in een IP-pakket, dat in een frame, dat als bits over de fysieke link gaat); dit heet **encapsulatie**. Aan de ontvangerkant wordt elke laag van onder naar boven weer **uitgepakt** (**decapsulatie**). Zo komt je oorspronkelijke verzoek bovenaan terug uit.
 
 Cruciaal: elke laag voegt zowel een **bron-** als een **bestemmingsadres** toe — telkens op zijn eigen niveau (zie de kolom *Adressering* in de tabel hierboven). Zo weet de ontvanger niet alleen wáár het naartoe moet, maar ook waarnaar het antwoord teruggestuurd kan worden:
 
