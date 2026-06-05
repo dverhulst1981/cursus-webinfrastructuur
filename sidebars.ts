@@ -15,7 +15,21 @@ import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
 const sidebars: SidebarsConfig = {
   tutorialSidebar: [
     'intro',
-    'hoofdstuk-1-netwerkstack-tcp-ip-fundamenten',
+    {
+      type: 'category',
+      label: '1. Netwerk fundamentals',
+      link: {type: 'doc', id: 'hoofdstuk-1-netwerkstack-tcp-ip-fundamenten/index'},
+      items: [
+        'hoofdstuk-1-netwerkstack-tcp-ip-fundamenten/tcp-ip-model',
+        'hoofdstuk-1-netwerkstack-tcp-ip-fundamenten/server',
+        'hoofdstuk-1-netwerkstack-tcp-ip-fundamenten/cloud',
+        'hoofdstuk-1-netwerkstack-tcp-ip-fundamenten/vps',
+        'hoofdstuk-1-netwerkstack-tcp-ip-fundamenten/ssh',
+        'hoofdstuk-1-netwerkstack-tcp-ip-fundamenten/linux-commandos',
+        'hoofdstuk-1-netwerkstack-tcp-ip-fundamenten/statische-pagina',
+        'hoofdstuk-1-netwerkstack-tcp-ip-fundamenten/troubleshooting',
+      ],
+    },
     'hoofdstuk-2-dns',
     'hoofdstuk-3-http',
     'hoofdstuk-4-https',
