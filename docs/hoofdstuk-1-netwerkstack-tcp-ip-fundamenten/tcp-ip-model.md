@@ -6,7 +6,7 @@ title: "Het TCP/IP-model"
 
 Wanneer twee computers over een netwerk praten, gebeurt dat niet in één grote stap maar in **lagen**. Elke laag heeft een eigen verantwoordelijkheid en praat enkel met de laag erboven en eronder. Dit **gelaagde model** maakt netwerken beheersbaar: je kunt één laag aanpassen (bv. van wifi naar kabel) zonder de rest te herschrijven.
 
-In deze cursus gebruiken we het **TCP/IP-model in vijf lagen**. Dit is een veelgebruikte variant die de onderste laag opsplitst in een **datalink-** en een **fysieke** laag. Dit is handig omdat MAC-adressering (datalink) en het effectieve signaal op de kabel (fysiek) duidelijk gescheiden worden. Het oudere **OSI-model** (zeven lagen) zie je vooral in theorie. De mapping staat in de laatste kolom.
+In deze cursus gebruiken we het **TCP/IP-model in vijf lagen**. Dit is een veelgebruikte variant die de onderste laag opsplitst in een **datalink-** en een **fysieke** laag. Die opsplitsing is handig omdat MAC-adressering (datalink) en het effectieve signaal op de kabel (fysiek) duidelijk gescheiden worden. Het oudere **OSI-model** (zeven lagen) zie je vooral in theorie. De mapping staat in de laatste kolom.
 
 | # | TCP/IP-laag (5) | Taak | Protocollen | Adressering (bron → bestemming) | Eenheid | OSI |
 |---|-----------------|------|-------------|---------------------------------|---------|-----|
@@ -22,9 +22,9 @@ Hieronder kort wat elke laag doet, van onder (de fysieke verbinding) naar boven 
 
 De onderste laag verstuurt de **bits** (enen en nullen) als een echt **signaal** over een fysiek medium. Hoe dat signaal eruitziet, hangt af van het medium:
 
-- **koperkabel** (UTP, Ethernet) - als elektrische spanning
-- **glasvezel** - als lichtpulsen
-- **wifi** - als radiogolven door de lucht
+- **koperkabel** (UTP, Ethernet) — als elektrische spanning
+- **glasvezel** — als lichtpulsen
+- **wifi** — als radiogolven door de lucht
 
 De laag **begrijpt de bits niet**, maar brengt ze van punt A naar punt B. Ook **bandbreedte** (bits per seconde) speelt op dit niveau.
 
@@ -39,42 +39,36 @@ Belangrijk: de datalinklaag raakt **niet voorbij het lokale netwerk**. Om een an
 
 ## Netwerklaag (laag 3)
 
-Terwijl de datalinklaag binnen één netwerk blijft, zorgt de netwerklaag dat data **over de grenzen van netwerken heen** raakt - dwars door het internet. Ze werkt met **IP-adressen** (logische adressen) en met **routering**.
+Terwijl de datalinklaag binnen één netwerk blijft, zorgt de netwerklaag dat data **over de grenzen van netwerken heen** raakt — dwars door het internet. Ze werkt met **IP-adressen** (logische adressen) en met **routering**.
 
 - Een **IP-adres** (bv. `93.184.216.34` in IPv4, of een langer IPv6-adres) identificeert een **machine** waar ook ter wereld.
 - **Routers** geven een **pakket** stap voor stap (hop per hop) door, telkens een stukje dichter bij de bestemming. Elke router kiest de volgende stap op basis van het bestemmings-IP.
 - **DNS** vertaalt een leesbare domeinnaam (`example.com`) naar een IP-adres (zie [hoofdstuk 2](../hoofdstuk-2-dns.md)).
 
-De netwerklaag biedt **geen garanties** dat alles aankomt - dat is net de taak van de transportlaag erboven. Samen bepalen **IP-adres + poort** aan beide kanten precies één verbinding.
+De netwerklaag biedt **geen garanties** dat alles aankomt — dat is net de taak van de transportlaag erboven. Samen bepalen **IP-adres + poort** aan beide kanten precies één verbinding.
 
 ## Transportlaag (laag 4)
 
-De netwerklaag bezorgt data bij de juiste **machine**. De transportlaag gaat verder: ze brengt de data bij het juiste **programma** (via poorten) en zorgt - bij TCP - dat alles **volledig en in volgorde** aankomt. Grote data wordt in **segmenten** geknipt en aan de andere kant weer samengevoegd.
+De netwerklaag bezorgt data bij de juiste **machine**. De transportlaag gaat verder: ze brengt de data bij het juiste **programma** (via poorten) en zorgt — bij TCP — dat alles **volledig en in volgorde** aankomt. Grote data wordt in **segmenten** geknipt en aan de andere kant weer samengevoegd.
 
-### Waarom heb je een poort nodig? 
+### Waarom heb je een poort nodig?
 
 Op één machine draaien meestal **meerdere programma's tegelijk**: bv. een webserver, een SSH-dienst en een database. Een **IP-adres** brengt data wel bij de juiste machine, maar niet bij het juiste programma. Dat doet de **poort**: het "huisnummer" binnen de machine.
 
-> Vergelijking: het **IP-adres** is het adres van het *gebouw*, de **poort** is het *bureau- of busnummer* binnen dat gebouw. Zonder busnummer weet de postbode niet bij wie de brief moet.
+> Vergelijking: het **IP-adres** is het adres van het *gebouw*, de **poort** is het *bureau- of busnummer* binnen dat gebouw. Zonder busnummer weet de postbode niet bij wie de brief terecht moet.
 
 Een **poortnummer** (16 bits, 0-65535) zegt dus voor welk programma een segment bedoeld is. Bij elke verbinding spelen er altijd **twee** poorten mee. Elk pakket draagt een **bronpoort** (van wie het komt) en een **bestemmingspoort** (waar het heen moet).
 
 Belangrijk: *bron* en *bestemming* zijn **labels die afhangen van de richting** van het pakket. Wat wél vastligt, is de **rol** van elke kant: de server-dienst luistert op een **vaste** poort, jouw toestel gebruikt een **tijdelijke** poort.
 
-### Bestemmingspoort
+### Bron- en bestemmingspoort
 
-De **bestemmingspoort** is de poort waar een pakket naartoe moet.
-
-### Bronpoort
-
-De **bronpoort** is de poort van waaruit een pakket vertrekt.
+De **bestemmingspoort** is de poort waar een pakket naartoe moet; de **bronpoort** is de poort van waaruit het vertrekt.
 
 Die bronpoort dient twee doelen:
 
 - **Het antwoord vindt de weg terug.** De server gebruikt jouw bronpoort als bestemming voor zijn antwoord: hij stuurt het naar jouw IP-adres op poort 54123. Zo komt het bij het juiste programma op jouw toestel terecht.
 - **Meerdere verbindingen tegelijk blijven uit elkaar.** Open je twee tabbladen naar dezelfde site, dan gebruikt elk tabblad een **andere** bronpoort. Het IP-adres en de bestemmingspoort (443) zijn identiek, maar dankzij de unieke bronpoort weet je toestel welk antwoord bij welk tabblad hoort.
-
-### Bron en bestemming wisselen om per richting
 
 Een verbinding bestaat uit verkeer in **twee richtingen**, en bij het antwoord **wisselen** bron en bestemming gewoon van plaats:
 
@@ -83,7 +77,15 @@ Een verbinding bestaat uit verkeer in **twee richtingen**, en bij het antwoord *
 | **Heenweg** (jouw pc → KBC-server) | 54123 (jouw tijdelijke poort) | 443 (https) |
 | **Terugweg** (KBC-server → jouw pc) | 443 (https) | 54123 (jouw tijdelijke poort) |
 
-De **nummers** zelf veranderen niet - wél welk nummer op dat moment het label "bron" of "bestemming" draagt. Dat hangt af van **wie verstuurt**. Poort 443 is dus geen "bestemmingspoort" op zich: het is de **vaste dienstpoort** van de server.
+De **nummers** zelf veranderen niet — wél welk nummer op dat moment het label "bron" of "bestemming" draagt. Dat hangt af van **wie verstuurt**. Poort 443 is dus geen "bestemmingspoort" op zich: het is de **vaste dienstpoort** van de server.
+
+### Soorten poorten
+
+Het volledige bereik **(0-65535)** is opgedeeld in drie groepen:
+
+- **Gereserveerde (well-known) poorten — bereik 0-1023.** Vast toegekend aan bekende diensten: HTTP (80), HTTPS (443), SSH (22), DNS (53). Op Linux heb je beheerdersrechten nodig om hierop te luisteren.
+- **Geregistreerde poorten — bereik 1024-49151.** Toegekend aan specifieke toepassingen, bv. MySQL (3306), PostgreSQL (5432) of een dev-server op 8080.
+- **Dynamische of tijdelijke (ephemeral) poorten — bereik 49152-65535.** Hieruit kiest je besturingssysteem telkens een vrije **bronpoort** voor een uitgaande verbinding (zoals de `51514` en `54123` in de voorbeelden op deze pagina).
 
 ### Twee protocollen: TCP en UDP
 
@@ -92,20 +94,18 @@ Het grote verschil is *betrouwbaarheid versus snelheid*.
 | | **TCP** | **UDP** |
 |--|---------|---------|
 | Verbinding | verbindingsgericht (eerst opzetten) | verbindingsloos (direct versturen) |
-| Garanties | volledig, in volgorde, foutcontrole | geen - segmenten kunnen verdwijnen of door elkaar komen |
+| Garanties | volledig, in volgorde, foutcontrole | geen — segmenten kunnen verdwijnen of door elkaar komen |
 | Snelheid | iets trager (overhead) | sneller, weinig overhead |
 | Typisch voor | HTTP(S), SSH, e-mail | streaming, gaming, DNS-queries, VoIP |
 
 - **TCP** (*Transmission Control Protocol*) is **betrouwbaar**.
-
 - **UDP** (*User Datagram Protocol*) is **snel**, zonder garanties.
-
 
 In deze cursus werk je vooral met **TCP**: zowel webpagina's opvragen (HTTP/HTTPS) als inloggen via SSH gebeurt erover.
 
 ## Applicatielaag (laag 5)
 
-De laag waar **programma's** met elkaar communiceren. Hier leeft het eigenlijke bericht - bijvoorbeeld een **HTTP-verzoek** van je browser. Typische protocollen: **HTTP(S)**, **DNS**, **SSH**, **FTP** en e-mailprotocollen. Deze laag bepaalt het *formaat* van de data, niet hoe ze fysiek op de bestemming raakt.
+De laag waar **programma's** met elkaar communiceren. Hier leeft het eigenlijke bericht — bijvoorbeeld een **HTTP-verzoek** van je browser. Typische protocollen: **HTTP(S)**, **DNS**, **SSH**, **FTP** en e-mailprotocollen. Deze laag bepaalt het *formaat* van de data, niet hoe ze fysiek op de bestemming raakt.
 
 Over deze applicatieprotocollen lees je later meer: **DNS** in [hoofdstuk 2](../hoofdstuk-2-dns.md), **HTTP** in [hoofdstuk 3](../hoofdstuk-3-http.md) en **HTTPS** in [hoofdstuk 4](../hoofdstuk-4-https.md).
 
@@ -147,7 +147,7 @@ flowchart LR
 
 Het verzoek wordt onderweg opgeknipt in **pakketten** en komt zo, hop per hop, aan bij de KBC-server. Hieronder zoomen we in op wat er **per laag** gebeurt: eerst de **encapsulatie** bij jou, daarna de **decapsulatie** bij KBC.
 
-> **Onthoud:** **encapsulatie** gebeurt enkel bij de **verzender** en **decapsulatie** enkel bij de **ontvanger**. De routers ertussen kijken alleen naar de adressen en sturen het pakket door - zij pakken het niet volledig uit.
+> **Onthoud:** **encapsulatie** gebeurt enkel bij de **verzender** en **decapsulatie** enkel bij de **ontvanger**. De routers ertussen kijken alleen naar de adressen en sturen het pakket door — zij pakken het niet volledig uit.
 
 <a id="encapsulatie-bij-jouw-pc"></a>
 
@@ -198,7 +198,7 @@ Je browser maakt een **HTTPS-verzoek** voor `www.kbc.be`. Dat "Bericht" (rechts,
   </div>
 </div>
 
-> **Let op:** het bestemmings-**IP** is de KBC-webserver, maar het bestemmings-**MAC** is **je router** - niet KBC. Een MAC-adres geldt enkel op je lokale netwerk en wordt bij elke router-hop vervangen. Het **IP-adres blijft wél hetzelfde** tot bij KBC.
+> **Let op:** het bestemmings-**IP** is de KBC-webserver, maar het bestemmings-**MAC** is **je router** — niet KBC. Een MAC-adres geldt enkel op je lokale netwerk en wordt bij elke router-hop vervangen. Het **IP-adres blijft wél hetzelfde** tot bij KBC.
 
 <a id="decapsulatie-bij-de-kbc-server"></a>
 
@@ -249,7 +249,7 @@ De **KBC-webserver** doet exact het omgekeerde: elke laag **leest zijn eigen hea
   </div>
 </div>
 
-> **Let op:** de **IP-adressen en poorten** zijn identiek aan die bij de verzender - ze blijven over het hele traject ongewijzigd. De **MAC-adressen verschillen wél**: bij elke router-hop wordt de MAC-header vervangen. Op de link bij KBC is de **bron-MAC** dus de laatste router en de **bestemmings-MAC** de KBC-webserver (`9C:8E:99:2F:14:C7`) - niet de MAC-adressen van bij jou.
+> **Let op:** de **IP-adressen en poorten** zijn identiek aan die bij de verzender — ze blijven over het hele traject ongewijzigd. De **MAC-adressen verschillen wél**: bij elke router-hop wordt de MAC-header vervangen. Op de link bij KBC is de **bron-MAC** dus de laatste router en de **bestemmings-MAC** de KBC-webserver (`9C:8E:99:2F:14:C7`) — niet de MAC-adressen van bij jou.
 
 #### Richting 2 - Het antwoord (KBC-server → jouw pc)
 

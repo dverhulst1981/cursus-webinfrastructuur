@@ -12,7 +12,7 @@ title: "2. DNS"
 
 ## Kerninhoud
 
-Je leert hoe domeinnamen worden vertaald naar IP-adressen en welke rol caching speelt in performantie en foutopsporing. We bespreken A, AAAA, CNAME, MX, TXT en NS records.
+Je leert hoe domeinnamen worden vertaald naar IP-adressen en welke rol caching speelt in prestaties en foutopsporing. We bespreken A-, AAAA-, CNAME-, MX-, TXT- en NS-records.
 
 ## Oefenopdracht
 

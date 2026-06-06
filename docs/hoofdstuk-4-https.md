@@ -12,7 +12,7 @@ title: "4. HTTPS"
 
 ## Kerninhoud
 
-Je leert hoe HTTPS vertrouwelijkheid, integriteit en authenticiteit levert. We behandelen certificaatketens, HSTS, mixed content en veelgemaakte configuratiefouten.
+Je leert hoe HTTPS vertrouwelijkheid, integriteit en authenticiteit levert. We behandelen certificaatketens, HSTS, mixed content en veelvoorkomende configuratiefouten.
 
 ## Oefenopdracht
 

@@ -7,7 +7,7 @@ title: "3. HTTP"
 ## Leerdoelen
 
 - Request/response-communicatie van HTTP interpreteren.
-- Statuscodes, methodes en headers functioneel gebruiken.
+- Statuscodes, methoden en headers functioneel gebruiken.
 - Caching en content negotiation in webapplicaties toepassen.
 
 ## Kerninhoud

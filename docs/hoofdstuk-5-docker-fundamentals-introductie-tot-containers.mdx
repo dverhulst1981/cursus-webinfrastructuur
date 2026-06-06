@@ -67,9 +67,9 @@ flowchart LR
 
 **Image** — een alleen-lezen sjabloon met bestanden, dependencies en metadata (standaardcommando, poorten, …). Denk aan een “snapshot” of recept.
 
-**Container** — een **draaiend exemplaar** van een image. Je kunt van dezelfde image meerdere containers starten (bijv. twee webserver-containers op verschillende hostpoorten).
+**Container** — een **draaiend exemplaar** van een image. Je kunt van dezelfde image meerdere containers starten (bv. twee webserver-containers op verschillende hostpoorten).
 
-**Tag** — een versie-label bij een image, bijvoorbeeld `httpd:2.4` of `postgres:16`. `latest` is geen garantie voor “nieuwste stabiel”; in productie kies je liever een **vaste tag**.
+**Tag** — een versielabel bij een image, bijvoorbeeld `httpd:2.4` of `postgres:16`. `latest` is geen garantie voor “nieuwste stabiel”; in productie kies je liever een **vaste tag**.
 
 **Volume** — opslag **buiten** de levensduur van één container. Zonder volume gaan wijzigingen in de container-filesystem verloren bij `docker rm`.
 
@@ -85,7 +85,7 @@ flowchart LR
 
 Docker is geen vervanging voor goede **beveiliging**, **monitoring** of **back-ups**. Het maakt deployment **reproduceerbaarder**; je blijft poorten, secrets, HTTPS en updates bewust configureren (*OLR 13*).
 
-### Wat heb je nodig om Docker te runnen?
+### Wat heb je nodig om Docker te draaien?
 
 In deze cursus werk je op **twee typische omgevingen**:
 
@@ -234,7 +234,7 @@ Elke image documenteert zijn **eigen** omgevingsvariabelen op Docker Hub. Gebrui
 
 #### Volumes (`-v` / `docker volume`)
 
-Container-filesystem is **ephemeral**: na verwijderen is data weg. Voor databases of uploads gebruik je een **volume**:
+Container-filesystem is **tijdelijk**: na verwijderen is data weg. Voor databases of uploads gebruik je een **volume**:
 
 ```bash
 docker volume create db_data
@@ -259,7 +259,7 @@ Je dagelijkse gereedschap in dit hoofdstuk:
 | Beheren | `docker stop`, `docker start`, `docker restart`, `docker exec -it` |
 | Opruimen | `docker rm`, `docker rmi`, `docker volume rm` |
 
-Korte voorbeelden (willekeurige image):
+Korte voorbeelden (image naar keuze):
 
 ```bash
 docker run -it ubuntu:22.04 bash
@@ -303,14 +303,14 @@ In [hoofdstuk 6](./hoofdstuk-6-dockerfiles-images.md) leer je met `docker build`
 | Geen data na herstart | Geen volume gebruikt | `-v` of named volume toevoegen |
 | Image kan niet verwijderd worden | Nog containers gebruiken image | Eerst containers `docker rm` |
 
-Dit sluit aan bij *OLR 07*: na deployment (of lokaal runnen) **verifieer** je bereikbaarheid en gebruik **logs** om problemen te lokaliseren.
+Dit sluit aan bij *OLR 07*: na deployment (of lokaal draaien) **verifieer** je bereikbaarheid en gebruik **logs** om problemen te lokaliseren.
 
 ### Samenvatting
 
 - Een **container** is een lichtgewicht, geïsoleerd proces op basis van een **image**.
 - **Docker** bestaat uit CLI + engine + (meestal) een registry.
 - Lokaal: **Docker Desktop op Windows**; op de VPS: **Docker Engine op Linux**.
-- Met **`docker pull` / `docker run` / `docker ps` / `docker logs` / volumes en `-p`** deploy je willekeurige stack-componenten uit Docker Hub.
+- Met **`docker pull` / `docker run` / `docker ps` / `docker logs` / volumes en `-p`** deploy je stack-componenten naar keuze uit Docker Hub.
 - Zie de [commandoreferentie](#docker-commandoreferentie) als naslag; Dockerfile en Compose volgen in hoofdstuk 6–7.
 
 ## Oefeningen
@@ -366,7 +366,7 @@ docker run -d --name mijn_app -e APP_ENV=production -v app_data:/app/data mijn_i
 
 #### `docker start` / `docker stop` / `docker restart`
 
-- **Beschrijving:** Herstart, stopt of herstart een bestaande container.
+- **Beschrijving:** Start, stopt of herstart een bestaande container.
 - **Voorbeelden:**
 
 ```bash
@@ -419,7 +419,7 @@ docker exec -it mijn_container sh
 
 #### `docker commit`
 
-- **Beschrijving:** Maakt een nieuw image van een container (*niet de aanbevolen workflow* — prefer Dockerfile in hst 6).
+- **Beschrijving:** Maakt een nieuw image van een container (*niet de aanbevolen workflow* — gebruik liever een Dockerfile, zie hst. 6).
 - **Parameters:** `-a` (auteur), `-m` (bericht)
 - **Voorbeeld:**
 
