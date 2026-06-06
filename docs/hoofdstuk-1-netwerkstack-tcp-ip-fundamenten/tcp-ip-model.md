@@ -130,55 +130,28 @@ We volgen één verzoek door alle lagen: **je surft naar `https://www.kbc.be`**.
 
 In beide richtingen geldt dezelfde regel: de **verzender encapsuleert** (stack omlaag) en de **ontvanger decapsuleert** (stack omhoog).
 
-#### De adressen in dit voorbeeld
-
-Deze adressen komen in alle schema's terug - houd ze als **leidraad** bij de hand:
-
-| Adres | Bron (jouw toestel) | Bestemming |
-|-------|---------------------|------------|
-| **Poort** | `51514` (willekeurig gekozen) | `443` (HTTPS) |
-| **IP-adres** | `192.168.0.10` (jouw toestel) | `193.190.71.10` (KBC-webserver) |
-| **MAC-adres** | `00:12:F1:1E:E8:93` (jouw netwerkkaart) | `A4:5E:60:1F:23:8B` (je router) |
-
 #### Richting 1 - Het verzoek (jouw pc → KBC-server)
 
 Jouw pc bouwt het verzoek op (**encapsulatie**, de stack omlaag). De KBC-server pakt het weer uit (**decapsulatie**, de stack omhoog).
 
 ```mermaid
 flowchart LR
-  PC["Jouw pc<br/>192.168.0.10<br/><a href='#encapsulatie-bij-de-verzender-jouw-toestel'><b>encapsulatie</b></a>"] ==>|"HTTPS-verzoek<br/>GET www.kbc.be"| R["Je router"]
+  PC["Jouw pc<br/>192.168.0.10 : 51514<br/>MAC : 00:12:F1:1E:E8:93<br/><a href='#encapsulatie-bij-jouw-pc'><b>encapsulatie</b></a>"] ==>|"HTTPS-verzoek<br/>GET www.kbc.be"| R["Je router<br/>MAC : A4:5E:60:1F:23:8B"]
   R ==>|"via vele routers"| NET(("Internet"))
-  NET ==> SRV["KBC-webserver<br/>193.190.71.10 : 443<br/><a href='#decapsulatie-bij-de-ontvanger-kbc-webserver'><b>decapsulatie</b></a>"]
+  NET ==> SRV["KBC-webserver<br/>193.190.71.10 : 443<br/>MAC : 9C:8E:99:2F:14:C7<br/><a href='#decapsulatie-bij-de-kbc-server'><b>decapsulatie</b></a>"]
   classDef enc fill:#e6f4ea,stroke:#3c7d3c,stroke-width:2px,color:#1b4d1b;
   classDef dec fill:#e8f0fe,stroke:#4a6a8a,stroke-width:2px,color:#1b3a5d;
   class PC enc;
   class SRV dec;
 ```
 
-Het verzoek wordt onderweg opgeknipt in **pakketten** en komt zo, hop per hop, aan bij de KBC-server.
-
-#### Richting 2 - Het antwoord (KBC-server → jouw pc)
-
-Nu draaien de rollen om: de KBC-server bouwt het antwoord op (**encapsulatie**) en jouw pc pakt het uit (**decapsulatie**).
-
-```mermaid
-flowchart RL
-  SRV["KBC-webserver<br/>193.190.71.10 : 443<br/><b>encapsulatie</b>"] ==>|"de webpagina<br/>(HTTP-antwoord)"| NET(("Internet"))
-  NET ==>|"via vele routers"| R["Je router"]
-  R ==> PC["Jouw pc<br/>192.168.0.10<br/>toont de webpagina<br/><b>decapsulatie</b>"]
-  classDef enc fill:#e6f4ea,stroke:#3c7d3c,stroke-width:2px,color:#1b4d1b;
-  classDef dec fill:#e8f0fe,stroke:#4a6a8a,stroke-width:2px,color:#1b3a5d;
-  class SRV enc;
-  class PC dec;
-```
-
-De server stuurt de gevraagde pagina terug. Jouw browser ontvangt de pakketten, zet ze weer samen en toont `www.kbc.be`.
+Het verzoek wordt onderweg opgeknipt in **pakketten** en komt zo, hop per hop, aan bij de KBC-server. Hieronder zoomen we in op wat er **per laag** gebeurt: eerst de **encapsulatie** bij jou, daarna de **decapsulatie** bij KBC.
 
 > **Onthoud:** **encapsulatie** gebeurt enkel bij de **verzender** en **decapsulatie** enkel bij de **ontvanger**. De routers ertussen kijken alleen naar de adressen en sturen het pakket door - zij pakken het niet volledig uit.
 
-In de volgende twee secties zoomen we in op wat er **per laag** gebeurt: eerst de **encapsulatie** bij jou, daarna de **decapsulatie** bij KBC.
+<a id="encapsulatie-bij-jouw-pc"></a>
 
-### Encapsulatie bij de verzender (jouw toestel)
+##### Encapsulatie bij jouw pc
 
 Je browser maakt een **HTTPS-verzoek** voor `www.kbc.be`. Dat "Bericht" (rechts, groen) blijft ongewijzigd. Elke laag **plakt er links een eigen header-blok bij**, telkens met een **bron- en bestemmingsadres** op zijn niveau. Zo groeit de data-eenheid van **bericht → segment → packet → frame → bits**:
 
@@ -201,7 +174,7 @@ Je browser maakt een **HTTPS-verzoek** voor `www.kbc.be`. Dat "Bericht" (rechts,
   <div class="enc-layer">
     <div class="enc-title">3 · Netwerk - Packet</div>
     <div class="enc-row">
-      <span class="enc-block enc-ip">Bron-IP = 192.168.0.10 · Bestemmings-IP = 193.190.71.10 (KBC)</span>
+      <span class="enc-block enc-ip">Bron-IP = 192.168.0.10 · Bestemmings-IP = 193.190.71.10 (KBC-server)</span>
       <span class="enc-block enc-port">Poorten</span>
       <span class="enc-block enc-msg">Bericht</span>
     </div>
@@ -227,7 +200,9 @@ Je browser maakt een **HTTPS-verzoek** voor `www.kbc.be`. Dat "Bericht" (rechts,
 
 > **Let op:** het bestemmings-**IP** is de KBC-webserver, maar het bestemmings-**MAC** is **je router** - niet KBC. Een MAC-adres geldt enkel op je lokale netwerk en wordt bij elke router-hop vervangen. Het **IP-adres blijft wél hetzelfde** tot bij KBC.
 
-### Decapsulatie bij de ontvanger (KBC-webserver)
+<a id="decapsulatie-bij-de-kbc-server"></a>
+
+##### Decapsulatie bij de KBC-server
 
 De **KBC-webserver** doet exact het omgekeerde: elke laag **leest zijn eigen header-blok uit en verwijdert het**, tot enkel het oorspronkelijke "Bericht" overblijft:
 
@@ -242,7 +217,7 @@ De **KBC-webserver** doet exact het omgekeerde: elke laag **leest zijn eigen hea
   <div class="enc-layer">
     <div class="enc-title">2 · Datalink - Frame ontvangen</div>
     <div class="enc-row">
-      <span class="enc-block enc-mac">lees + verwijder bron/bestemmings-MAC</span>
+      <span class="enc-block enc-mac">Bron-MAC = 1C:6F:65:9A:D2:0E (laatste router) · Bestemmings-MAC = 9C:8E:99:2F:14:C7 (KBC-server)</span>
       <span class="enc-block enc-ip">IP-adressen</span>
       <span class="enc-block enc-port">Poorten</span>
       <span class="enc-block enc-msg">Bericht</span>
@@ -252,7 +227,7 @@ De **KBC-webserver** doet exact het omgekeerde: elke laag **leest zijn eigen hea
   <div class="enc-layer">
     <div class="enc-title">3 · Netwerk - Packet</div>
     <div class="enc-row">
-      <span class="enc-block enc-ip">lees + verwijder bron/bestemmings-IP</span>
+      <span class="enc-block enc-ip">Bron-IP = 192.168.0.10 · Bestemmings-IP = 193.190.71.10 (KBC-server)</span>
       <span class="enc-block enc-port">Poorten</span>
       <span class="enc-block enc-msg">Bericht</span>
     </div>
@@ -261,7 +236,7 @@ De **KBC-webserver** doet exact het omgekeerde: elke laag **leest zijn eigen hea
   <div class="enc-layer">
     <div class="enc-title">4 · Transport - Segment</div>
     <div class="enc-row">
-      <span class="enc-block enc-port">lees + verwijder bron/bestemmingspoort</span>
+      <span class="enc-block enc-port">Bronpoort = 51514 · Bestemmingspoort = 443 (HTTPS)</span>
       <span class="enc-block enc-msg">Bericht</span>
     </div>
   </div>
@@ -269,7 +244,28 @@ De **KBC-webserver** doet exact het omgekeerde: elke laag **leest zijn eigen hea
   <div class="enc-layer">
     <div class="enc-title">5 · Applicatie</div>
     <div class="enc-row">
-      <span class="enc-block enc-msg">Bericht - afgeleverd aan de webserver</span>
+      <span class="enc-block enc-msg">Bericht = GET {"https://www.kbc.be"}</span>
     </div>
   </div>
 </div>
+
+> **Let op:** de **IP-adressen en poorten** zijn identiek aan die bij de verzender - ze blijven over het hele traject ongewijzigd. De **MAC-adressen verschillen wél**: bij elke router-hop wordt de MAC-header vervangen. Op de link bij KBC is de **bron-MAC** dus de laatste router en de **bestemmings-MAC** de KBC-webserver (`9C:8E:99:2F:14:C7`) - niet de MAC-adressen van bij jou.
+
+#### Richting 2 - Het antwoord (KBC-server → jouw pc)
+
+Nu draaien de rollen om: de KBC-server bouwt het antwoord op (**encapsulatie**) en jouw pc pakt het uit (**decapsulatie**).
+
+```mermaid
+flowchart RL
+  SRV["KBC-webserver<br/>193.190.71.10 : 443<br/>MAC : 9C:8E:99:2F:14:C7<br/><b>encapsulatie</b>"] ==>|"de webpagina<br/>(HTTP-antwoord)"| NET(("Internet"))
+  NET ==>|"via vele routers"| R["Je router<br/>MAC : A4:5E:60:1F:23:8B"]
+  R ==> PC["Jouw pc<br/>192.168.0.10 : 51514<br/>MAC : 00:12:F1:1E:E8:93<br/>toont de webpagina<br/><b>decapsulatie</b>"]
+  classDef enc fill:#e6f4ea,stroke:#3c7d3c,stroke-width:2px,color:#1b4d1b;
+  classDef dec fill:#e8f0fe,stroke:#4a6a8a,stroke-width:2px,color:#1b3a5d;
+  class SRV enc;
+  class PC dec;
+```
+
+De server stuurt de gevraagde pagina terug. Jouw browser ontvangt de pakketten, zet ze weer samen en toont `www.kbc.be`.
+
+Deze richting verloopt volledig **gelijkaardig** aan het verzoek hierboven, maar met de rollen omgewisseld: nu **encapsuleert de KBC-webserver** en **decapsuleert jouw pc**. Bron en bestemming wisselen daarbij van plaats (zo wordt poort `443` de bronpoort en `51514` de bestemmingspoort), maar het principe van laag per laag headers toevoegen en weer afpellen blijft identiek.
