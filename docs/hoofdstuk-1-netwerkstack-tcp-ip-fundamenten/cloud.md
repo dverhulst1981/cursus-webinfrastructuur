@@ -47,7 +47,7 @@ In deze cursus gebruiken we de **publieke cloud**.
 
 ## Onze keuze: een VPS (IaaS)
 
-In deze cursus werken we met **IaaS** in de vorm van een **VPS** (*Virtual Private Server*): een **virtuele machine** die je volledig zelf beheert. Je hebt root-toegang, kiest het besturingssysteem en installeert wat je wilt. Dat is ideaal om te leren hoe deployment écht werkt - je ziet elke laag, van het besturingssysteem tot de webserver. Hoe je er een opzet, lees je in [Een cloud server (VPS) opzetten](./vps.md).
+In deze cursus werken we met **IaaS** in de vorm van een **VPS** (*Virtual Private Server*): een **virtuele machine** die je volledig zelf beheert. Je hebt root-toegang, kiest het besturingssysteem en installeert wat je wilt. Dat is ideaal om te leren hoe deployment écht werkt - je ziet elke laag, van het besturingssysteem tot de webserver. Hoe je er een opzet, lees je in [Virtual Private Server](./vps.md).
 
 :::tip[Afweging - OLR 12]
 

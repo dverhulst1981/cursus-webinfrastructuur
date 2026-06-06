@@ -1,8 +1,8 @@
 ---
-title: "Een cloud server (VPS) opzetten"
+title: "Virtual Private Server"
 ---
 
-# Een cloud server (VPS) opzetten
+# Virtual Private Server
 
 ## Wat is een VPS?
 
@@ -38,11 +38,11 @@ Dit levert een **private key** (`~/.ssh/id_ed25519`, geheim) en een **public key
    - **Grootte** - voor een statische pagina volstaat de kleinste optie (1 vCPU, 1 GB RAM).
    - **Regio** - kies een datacenter dicht bij je gebruikers (bv. Frankfurt of Amsterdam voor België).
 3. **Authenticatie instellen** - plak de **publieke SSH-sleutel** die je hierboven aanmaakte (de inhoud van `id_ed25519.pub`). Dit is veiliger dan een wachtwoord.
-4. **IP-adres noteren** - na het aanmaken krijgt je server een **publiek IPv4-adres** (bv. `203.0.113.10`). Via dat adres bereik je de server.
+4. **IP-adres noteren** - na het aanmaken krijgt je server een **publiek IPv4-adres** (bv. `<public ip>`). Via dat adres bereik je de server.
 5. **Inloggen via SSH** - verbind met je server via het publieke IP en je private key. Zo kom je op de server terecht om hem verder te configureren:
 
    ```bash
-   ssh gebruiker@203.0.113.10
+   ssh gebruiker@<public ip>
    ```
 
    Meer over het inlogproces (host key, `known_hosts`): zie [SSH](./ssh.md).

@@ -86,7 +86,7 @@ sequenceDiagram
 Aanmelden doe je met:
 
 ```bash
-ssh gebruiker@203.0.113.10
+ssh gebruiker@<public ip>
 ```
 
 **De server identificeren — `known_hosts`.** De eerste keer toont SSH de *host key fingerprint* van de server en vraagt of je hem vertrouwt. Bevestig met `yes`: de host key komt in `~/.ssh/known_hosts` op jouw computer. Bij volgende logins vergelijkt SSH de host key telkens met `known_hosts` en **waarschuwt** als die plots wijzigt — een mogelijke man-in-the-middle.

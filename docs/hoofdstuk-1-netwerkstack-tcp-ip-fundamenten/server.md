@@ -66,7 +66,7 @@ Op **één** machine kunnen **meerdere serverprogramma's tegelijk** draaien. Ze 
 
 ## Fysiek of virtueel
 
-Een server hoeft geen aparte fysieke kast te zijn. Met **virtualisatie** draaien er meerdere **virtuele servers** (VM's) op één fysieke machine, elk met een eigen besturingssysteem, alsof het aparte computers zijn. Net dat maakt de **cloud** mogelijk: je huurt zo'n virtuele server in plaats van zelf hardware te kopen. In deze cursus werk je daarom met een **VPS** - zie [Wat is de cloud?](./cloud.md) en [Een cloud server (VPS) opzetten](./vps.md).
+Een server hoeft geen aparte fysieke kast te zijn. Met **virtualisatie** draaien er meerdere **virtuele servers** (VM's) op één fysieke machine, elk met een eigen besturingssysteem, alsof het aparte computers zijn. Net dat maakt de **cloud** mogelijk: je huurt zo'n virtuele server in plaats van zelf hardware te kopen. In deze cursus werk je daarom met een **VPS** - zie [Wat is de cloud?](./cloud.md) en [Virtual Private Server](./vps.md).
 
 ## Server vs. gewone pc
 

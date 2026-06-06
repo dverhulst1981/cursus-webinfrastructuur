@@ -4,68 +4,67 @@ title: "Oefeningen: Linux-basiscommando's"
 
 # Oefeningen: Linux-basiscommando's
 
-> Werk deze oefeningen uit op een **Linux-systeem** (lokaal of in WSL). Ze vormen samen één verhaal: je **bouwt een webpagina**, **installeert een webserver** en zet je pagina ten slotte **online**. Zoek bij elke stap zelf het juiste commando (gebruik de [Linux-basiscommando's](./linux-commandos.md) als naslagwerk) en voer de stappen in volgorde uit.
+> Werk deze oefeningen uit op een **Linux-systeem** (lokaal of in WSL) - een server is niet nodig. Elke oefening maakt zelf de bestanden aan die ze gebruikt, zodat je alles meteen kunt uittesten. Zoek bij elke stap zelf het juiste commando (gebruik de [Linux-basiscommando's](./linux-commandos.md) als naslag) en voer de stappen in volgorde uit. De uitgewerkte oplossingen vind je bij de [Oplossingen](./oplossingen.md#oplossingen-linux-basiscommandos).
+>
+> Het **deployen van een statische webpagina** (webserver installeren, pagina online zetten) oefen je apart op de pagina [Een statische webpagina](./statische-pagina.md).
 
-## Oefening 1 - Verken het bestandssysteem
+## Oefening 1 - Navigatie en verkenning
 
 1. Toon je huidige map.
 2. Ga naar de root `/` en lijst de inhoud op.
-3. Ga naar de map `/var` en toon de inhoud als **gedetailleerde lijst** (met rechten, eigenaar en grootte).
+3. Ga naar de map `/etc` en toon de inhoud als **gedetailleerde lijst** (met rechten, eigenaar en grootte).
 4. Spring in **één** commando terug naar je home-map.
 5. Lijst je home-map op **inclusief de verborgen bestanden**.
+6. Spring met **één** commando terug naar de vorige map (`/etc`) en weer terug.
+7. Geef voor je home-map zowel het **absolute** als een **relatief** pad (vanuit `/etc`).
 
-## Oefening 2 - Bouw je webpagina
+## Oefening 2 - Bestanden en mappen beheren
 
-Je maakt de HTML-pagina die je later online zet.
+1. Ga naar je home-map en maak in **één** commando de mappenstructuur `project/src` aan.
+2. Maak in `project` een leeg bestand `README.md` aan.
+3. Maak in `project/src` twee lege bestanden: `app.js` en `helper.js`.
+4. Kopieer `README.md` naar `project/LEESMIJ.md`.
+5. Hernoem `project/src/helper.js` naar `project/src/utils.js`.
+6. Kopieer de hele map `project` naar `project-backup`.
+7. Verwijder het bestand `project/LEESMIJ.md`.
+8. Toon de volledige inhoud van `project` (inclusief submappen) als **gedetailleerde lijst** en controleer het resultaat.
 
-1. Ga naar je home-map, maak er de map `mijnsite` aan en ga erin.
-2. Open `index.html` in `nano`, typ onderstaande inhoud en sla op (`Ctrl + O`, Enter; afsluiten met `Ctrl + X`):
+## Oefening 3 - Rechten met `chmod` en `chown`
 
-   ```html
-   <!DOCTYPE html>
-   <html lang="nl">
-   <head>
-     <meta charset="utf-8">
-     <title>Mijn eerste server</title>
-   </head>
-   <body>
-     <h1>Hallo vanaf mijn server!</h1>
-     <p>Deze pagina draait op mijn eigen webserver.</p>
-   </body>
-   </html>
+1. Maak in je home-map een bestand `script.sh` aan met als inhoud de regel `echo "Hallo"`.
+2. Bekijk de huidige rechten met een **gedetailleerde lijst**.
+3. Geef met **cijfernotatie** de eigenaar `rwx` en de groep en overige gebruikers `r-x`. Controleer het resultaat.
+4. Geef met **cijfernotatie** de rechten `rw-r--r--`. Controleer opnieuw.
+5. Voeg met **letternotatie** in één commando uitvoerrecht toe voor de eigenaar en haal schrijfrecht weg bij de groep. Controleer.
+6. *(Uitdaging)* Verander met `sudo` de **groep** van `script.sh` naar `root` en zet daarna de eigenaar terug naar jezelf. Bekijk telkens het resultaat.
+
+## Oefening 4 - Tekst filteren met `grep`, `sort` en pipes
+
+1. Maak een bestand `log.txt` aan met onderstaande regels (gebruik `echo` met `>` en `>>`, of `nano`):
+
+   ```text
+   INFO  start
+   ERROR  schijf vol
+   info  herstart
+   WARNING  trage respons
+   ERROR  netwerk weg
+   INFO  klaar
    ```
 
-3. Toon de inhoud van `index.html` om te controleren dat ze correct is opgeslagen.
+2. Toon het bestand met **genummerde** regels.
+3. Toon enkel de regels die `ERROR` bevatten.
+4. Toon alle regels met `info` **ongeacht hoofdletters** (zowel `INFO` als `info`).
+5. Toon de regels die **geen** `INFO` bevatten.
+6. Tel hoeveel regels het bestand telt.
+7. Sorteer de regels alfabetisch en stuur het resultaat naar een nieuw bestand `gesorteerd.txt` (gebruik een **pipe** en **redirection**).
+8. Tel met één pijplijn hoe vaak elk **eerste woord** (`INFO`, `ERROR`, …) voorkomt. *Tip:* combineer `cut`, `sort` en `uniq -c`.
 
-## Oefening 3 - Installeer een webserver
+## Oefening 5 - Processen en gebruikers
 
-Een webserver is het programma dat je pagina aan bezoekers levert. We gebruiken **nginx**. (De alternatieven **Apache** en **webfsd** komen aan bod in [Een statische webpagina deployen](./statische-pagina.md).)
-
-1. Ververs eerst de pakketlijst.
-2. Installeer de webserver `nginx`.
-3. Controleer of de `nginx`-service actief is.
-
-## Oefening 4 - Verken de webroot
-
-nginx levert standaard de bestanden uit de map `/var/www/html` (de **webroot**).
-
-1. Ga naar de webroot `/var/www/html` en toon de inhoud als **gedetailleerde lijst**.
-2. Toon de inhoud van het standaard HTML-bestand dat daar staat.
-3. Spring terug naar je home-map.
-
-## Oefening 5 - Zet je pagina online
-
-1. Kopieer met beheerdersrechten je bestand `~/mijnsite/index.html` naar de webroot `/var/www/html/`, zodat het de standaardpagina vervangt.
-2. Geef het bestand **lees- en schrijfrecht voor de eigenaar** en **enkel leesrecht voor de groep en de overige gebruikers**.
-3. Toon de inhoud van de webroot als **gedetailleerde lijst** en controleer dat je `index.html` er staat met de rechten die je in stap 2 instelde.
-
-## Oefening 6 - Controleer dat je pagina online staat
-
-1. Surf in de webbrowser naar het adres `http://localhost` en controleer dat je je eigen tekst uit oefening 2 terugziet.
-
-
-:::tip[Waarom eerst apt update?]
-
-`apt update` haalt de **actuele lijst** van beschikbare pakketten en versies op. Sla je dit over, dan installeer je mogelijk een verouderde versie of vindt `apt` een recent pakket niet. `apt update` wijzigt zelf nog niets aan je systeem - dat doen pas `apt install` of `apt upgrade`.
-
-:::
+1. Toon als welke gebruiker je bent ingelogd.
+2. Toon je user-id, group-id en groepen.
+3. Start een commando dat 300 seconden wacht **in de achtergrond** (zodat je shell vrij blijft).
+4. Toon de actieve/gepauzeerde taken in deze shell.
+5. Zoek de **PID** van dat wachtcommando op.
+6. Stop het proces via zijn PID en controleer dat het weg is.
+7. Toon de actieve processen als een **boom met PID's**.

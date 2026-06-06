@@ -1,80 +1,27 @@
 ---
-title: "Een statische webpagina deployen"
+title: "Een statische webpagina"
 ---
 
-# Een statische webpagina deployen
+# Een statische webpagina
 
-Een **statische webpagina** is een vast bestand (HTML, CSS, afbeeldingen) dat de server ongewijzigd terugstuurt - geen databank of servercode nodig. Dat maakt het de ideale eerste deployment. Je hebt drie eenvoudige opties. Kies er één.
+Een **statische webpagina** is een vast bestand (HTML, CSS, afbeeldingen) dat de server ongewijzigd terugstuurt - geen databank of servercode nodig. Dat maakt het de ideale eerste deployment.
 
 ```mermaid
 flowchart LR
-  HTML["index.html"] --> WS["Webserver<br/>(webfsd / Apache / nginx)"]
-  WS -->|"poort 80"| Browser["Browser<br/>http://JOUW-IP"]
+  HTML["index.html"] --> WS["Webserver<br/>(webfsd / nginx / Apache)"]
+  WS -->|"poort 80"| Browser["Browser<br/>http://&lt;public ip&gt;"]
 ```
 
-## Optie A - `webfsd` (lichtgewicht, snel testen)
+## Veelgebruikte webservers
 
-`webfsd` is een minimale webserver, ideaal om snel iets te tonen:
+Een **webserver** is het programma dat je webpagina *served*: het stuurt het juiste bestand naar de browser van elke bezoeker die erom vraagt. Er bestaan er veel (Caddy, LiteSpeed, Microsoft IIS …); hieronder lichten we drie veelgebruikte keuzes op een Linux-server uit:
 
-```bash
-sudo apt update
-sudo apt install webfs                 # levert het commando 'webfsd'
-mkdir ~/site
-echo "<h1>Hallo vanaf mijn VPS</h1>" > ~/site/index.html
-webfsd -p 80 -r ~/site -f index.html   # -p poort, -r root-map, -f standaardbestand
-```
+| Webserver | Type | Webroot | Wanneer |
+|-----------|------|---------|---------|
+| `webfsd` | minimale, lichtgewicht server (geen service) | map naar keuze (bv. `~/site`) | snel iets tonen of even testen |
+| **nginx** | veelgebruikte productie-webserver (draait als service) | `/var/www/html` | echte deployment, hoge belasting |
+| **Apache** (`apache2`) | klassieke productie-webserver (draait als service) | `/var/www/html` | echte deployment, brede module-ondersteuning |
 
-Open in je browser `http://JOUW-IP`. Stop de server met `Ctrl + C`.
+Het principe is bij alle drie hetzelfde: je plaatst een `index.html` in de **webroot** en de server levert die uit op **poort 80**. `webfsd` start je zelf in een terminal; **nginx** en **Apache** draaien als **service** die na installatie meteen actief is.
 
-## Optie B - nginx
-
-**nginx** is een veelgebruikte productie-webserver. Na installatie draait hij meteen en serveert hij bestanden uit `/var/www/html`:
-
-```bash
-sudo apt update
-sudo apt install nginx
-# Vervang de standaardpagina:
-sudo nano /var/www/html/index.html
-```
-
-Typ je eigen HTML, sla op (`Ctrl + O`, Enter) en sluit af (`Ctrl + X`). nginx draait als **service**:
-
-```bash
-sudo systemctl status nginx     # draait hij?
-sudo systemctl restart nginx    # herstart na configuratiewijziging
-```
-
-## Optie C - Apache
-
-**Apache** (`apache2` op Ubuntu) werkt volgens hetzelfde principe. Ook hier staat de webroot in `/var/www/html`:
-
-```bash
-sudo apt update
-sudo apt install apache2
-sudo nano /var/www/html/index.html
-sudo systemctl restart apache2
-```
-
-## Verifiëren
-
-Controleer of je pagina bereikbaar is - dit hoort bij *OLR 07*:
-
-```bash
-curl http://localhost          # vanaf de server zelf
-curl http://JOUW-IP            # of open het IP in je browser
-```
-
-Krijg je geen antwoord? Doorloop de [troubleshooting](./troubleshooting.md).
-
-:::warning[Firewall en poort 80]
-
-Als je server niet bereikbaar is van buitenaf, staat poort **80** mogelijk dicht. Open hem in de firewall van je provider én lokaal:
-
-```bash
-sudo ufw allow 80/tcp
-sudo ufw allow 22/tcp      # sluit jezelf niet buiten!
-```
-
-Op een verse Ubuntu-server staat `ufw` vaak nog **uit**. Open dan éérst poort 22 (SSH) en activeer pas daarna de firewall met `sudo ufw enable` - anders sluit je je eigen SSH-verbinding af.
-
-:::
+In de oefeningen gebruiken we **nginx** als voorbeeld. Wil je liever `webfsd` of Apache gebruiken, zoek dan zelf op hoe je daarmee je pagina online zet - het principe (pagina in de webroot, poort 80) blijft hetzelfde.
