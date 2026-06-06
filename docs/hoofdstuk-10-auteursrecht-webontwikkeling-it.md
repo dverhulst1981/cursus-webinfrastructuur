@@ -12,7 +12,7 @@ title: "10. Auteursrecht binnen webontwikkeling en IT"
 
 ## Kerninhoud
 
-Je behandelt eigendom van code, open source licenties, gebruiksvoorwaarden van assets en praktische richtlijnen voor compliant softwareontwikkeling.
+Je behandelt eigendom van code, open source-licenties, gebruiksvoorwaarden van assets en praktische richtlijnen voor conforme softwareontwikkeling.
 
 ## Oefenopdracht
 

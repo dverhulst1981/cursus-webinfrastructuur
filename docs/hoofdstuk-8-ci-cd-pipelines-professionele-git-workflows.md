@@ -7,7 +7,7 @@ title: "8. CI/CD pipelines & professionele Git workflows"
 ## Leerdoelen
 
 - CI/CD-principes toepassen op een webproject.
-- Branchingstrategieën en pull request workflows professioneel inzetten.
+- BranchingstrategieÃ«n en pull request workflows professioneel inzetten.
 - Automatische kwaliteitscontroles in pipelines integreren.
 
 ## Kerninhoud

@@ -6,9 +6,9 @@ title: "9. Monitoring, logging & troubleshooting van websystemen"
 
 ## Leerdoelen
 
-- Monitoring- en loggingstrategieën opzetten.
+- Monitoring- en loggingstrategieÃ«n opzetten.
 - Incidenten systematisch onderzoeken en documenteren.
-- Basis-SLI/SLO-denken toepassen op webdiensten.
+- Basisconcepten van SLI/SLO toepassen op webdiensten.
 
 ## Kerninhoud
 
